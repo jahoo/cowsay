@@ -12,6 +12,10 @@ And then execute:
 
     $ cowsay 'Hello world!'
 
+You can set your own *absolute* path to cowsay template directory:
+
+    export COWSAY_TEMPLATES_PATH='/Users/xxx.yyy/my_stuff/cowsay_templates'
+
 ## Contributing
 
 1. Fork it

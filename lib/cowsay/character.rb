@@ -21,7 +21,8 @@ module Cowsay
     private
 
     def render_character
-      File.read("./lib/templates/#{@template_name}.txt")
+      templates_path = ENV['COWSAY_TEMPLATES_PATH'] || [Gem.loaded_specs['cowsay'].full_gem_path, '/lib/templates'].join('')
+      File.read("#{templates_path}/#{@template_name}.txt")
     end
 
     def render_balloon(message)

@@ -1,5 +1,5 @@
-require_relative './cowsay/version'
-require_relative './cowsay/character'
+require 'cowsay/version'
+require 'cowsay/character'
 
 module ::Cowsay
   module_function # all instance methods are available on the module (class) level
@@ -9,10 +9,15 @@ module ::Cowsay
   end
 
   def character_classes
-    @character_classes ||= Dir.children(''./lib/templates').map { |t| File.basename(t, '.txt') }
+    @character_classes ||= begin
+      templates_path = ENV['COWSAY_TEMPLATES_PATH'] || [Gem.loaded_specs['cowsay'].full_gem_path, '/lib/templates'].join('')
+      Dir.children(templates_path).map { |t| File.basename(t, '.txt') }
+    end
   end
 
   def say(message, template_name)
+    template_name ||= 'pika'
+
     if template_name == 'random'
       random_character.say(message)
     elsif character_classes.include? template_name
